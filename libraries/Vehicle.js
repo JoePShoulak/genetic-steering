@@ -108,12 +108,12 @@ class Vehicle {
   breed(other) {
     const dna = {
       food: {
-        force: this.dna.food.force + other.dna.food.force / 2,
-        radius: this.dna.food.radius + other.dna.food.radius / 2,
+        force: (this.dna.food.force + other.dna.food.force) / 2,
+        radius: (this.dna.food.radius + other.dna.food.radius) / 2,
       },
       poison: {
-        force: this.dna.poison.force + other.dna.poison.force / 2,
-        radius: this.dna.poison.radius + other.dna.poison.radius / 2,
+        force: (this.dna.poison.force + other.dna.poison.force) / 2,
+        radius: (this.dna.poison.radius + other.dna.poison.radius) / 2,
       },
     };
 
