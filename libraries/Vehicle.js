@@ -6,7 +6,7 @@ class Pellet {
   static details = {
     poison: {
       color: "red",
-      value: -50,
+      value: -100,
     },
     food: {
       color: "yellow",
@@ -115,14 +115,25 @@ class Vehicle {
   breed(other) {
     const dna = {
       food: {
-        force: (this.dna.food.force + other.dna.food.force) / 2,
-        radius: (this.dna.food.radius + other.dna.food.radius) / 2,
+        force: lerp(this.dna.food.force, other.dna.food.force, random()),
+        radius: lerp(this.dna.food.radius, other.dna.food.radius, random()),
       },
       poison: {
-        force: (this.dna.poison.force + other.dna.poison.force) / 2,
-        radius: (this.dna.poison.radius + other.dna.poison.radius) / 2,
+        force: lerp(this.dna.poison.force, other.dna.poison.force, random()),
+        radius: lerp(this.dna.poison.radius, other.dna.poison.radius, random()),
       },
     };
+    // const dna = {
+    //   food: {
+    //     force: random() > 0.5 ? this.dna.food.force : other.dna.food.force,
+    //     radius: random() > 0.5 ? this.dna.food.radius : other.dna.food.radius,
+    //   },
+    //   poison: {
+    //     force: random() > 0.5 ? this.dna.poison.force : other.dna.poison.force,
+    //     radius:
+    //       random() > 0.5 ? this.dna.poison.radius : other.dna.poison.radius,
+    //   },
+    // };
 
     return new Vehicle(dna).mutate();
   }

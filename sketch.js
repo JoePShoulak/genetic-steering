@@ -1,12 +1,13 @@
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
+  reset();
 }
 
 let vehicles = [];
 let pellets = [];
 let generationCount = 1;
 
-const pelletCount = 200;
+let pelletCount;
 const vehicleCount = 10;
 
 const toggleVisuals = () => (Vehicle.verboseVisuals = !Vehicle.verboseVisuals);
@@ -14,12 +15,10 @@ const toggleVisuals = () => (Vehicle.verboseVisuals = !Vehicle.verboseVisuals);
 function newGeneration(oldVehicles) {
   if (oldVehicles) {
     console.log("  Oldest:", max(oldVehicles.map((v) => v.age)));
-    const newVehicles = [];
-    while (newVehicles.length < vehicleCount) {
+    vehicles = [...oldVehicles].map(() => {
       const [a, b] = Vehicle.randomPair(vehicles);
-      newVehicles.push(a.breed(b));
-    }
-    vehicles = newVehicles;
+      return a.breed(b);
+    });
   } else {
     vehicles = Array(vehicleCount)
       .fill()
@@ -33,11 +32,16 @@ function newGeneration(oldVehicles) {
   generationCount++;
 }
 
+function reset() {
+  pelletCount = ~~((width * height) / 1500);
+}
+
 function setup() {
   createCanvas(innerWidth, innerHeight);
 
   createButton("Toggle Visuals").mouseClicked(toggleVisuals).position(0, 0);
 
+  reset();
   newGeneration();
 }
 
