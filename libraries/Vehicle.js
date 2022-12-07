@@ -90,7 +90,6 @@ class Vehicle {
   /* == LIFECYCLE == */
   die() {
     this.alive = false;
-    console.log("Died. Age: ", this.age);
   }
 
   mutate() {
