@@ -60,22 +60,29 @@ class Vehicle {
 
     this.dna = dna ?? {
       food: {
-        force: random(-this.maxForce, this.maxForce),
-        radius: random(this.hitRadius, this.maxRadius),
+        force: this.randomDNA.force(),
+        radius: this.randomDNA.radius(),
       },
       poison: {
-        force: random(-this.maxForce, this.maxForce),
-        radius: random(this.hitRadius, this.maxRadius),
+        force: this.randomDNA.force(),
+        radius: this.randomDNA.radius(),
       },
     };
   }
 
-  get color() {
-    return lerpColor(color("red"), color("yellow"), this.health / 500);
+  get randomDNA() {
+    return {
+      force: () => random(-this.maxForce, this.maxForce),
+      radius: () => random(this.hitRadius, this.maxRadius),
+    };
   }
 
   get hitRadius() {
     return this.size + Pellet.size;
+  }
+
+  get color() {
+    return lerpColor(color("red"), color("yellow"), this.health / 500);
   }
 
   get onScreen() {
@@ -94,13 +101,13 @@ class Vehicle {
 
   mutate() {
     if (random() < this.mutationRate)
-      this.dna.food.force += random(-this.maxForce, this.maxForce) / 10;
+      this.dna.food.force = this.randomDNA.force();
     if (random() < this.mutationRate)
-      this.dna.poison.force += random(-this.maxForce, this.maxForce) / 10;
+      this.dna.poison.force = this.randomDNA.force();
     if (random() < this.mutationRate)
-      this.dna.food.radius += random(-this.maxRadius, this.maxRadius) / 10;
+      this.dna.food.radius = this.randomDNA.radius();
     if (random() < this.mutationRate)
-      this.dna.poison.radius += random(-this.maxRadius, this.maxRadius) / 10;
+      this.dna.poison.radius = this.randomDNA.radius();
 
     return this;
   }
