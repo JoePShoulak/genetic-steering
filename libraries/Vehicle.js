@@ -1,5 +1,5 @@
 class Pellet {
-  static poisonRate = 0.2;
+  static poisonRate = 0.1;
   static kinds = ["poison", "food"];
   static size = 5;
 
@@ -57,7 +57,7 @@ class Vehicle {
     this.maxRadius = 100;
     this.mutationRate = 0.01;
     this.alive = true;
-    this.cloneRate = 0.0003;
+    this.cloneRate = 0.001;
 
     this.dna = dna ?? {
       food: {
