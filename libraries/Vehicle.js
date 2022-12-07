@@ -1,5 +1,5 @@
 class Pellet {
-  static poisonRate = 0.3;
+  static poisonRate = 0.2;
   static kinds = ["poison", "food"];
   static size = 5;
 
@@ -46,7 +46,7 @@ class Vehicle {
 
   constructor(dna) {
     this.pos = randomPos();
-    this.vel = createVector();
+    this.vel = p5.Vector.random2D();
     this.acc = createVector();
 
     this.age = 0;
@@ -55,8 +55,9 @@ class Vehicle {
     this.maxSpeed = 2;
     this.maxForce = 0.2;
     this.maxRadius = 100;
-    this.mutationRate = 0.05;
+    this.mutationRate = 0.01;
     this.alive = true;
+    this.cloneRate = 0.0003;
 
     this.dna = dna ?? {
       food: {
@@ -110,6 +111,10 @@ class Vehicle {
       this.dna.poison.radius = this.randomDNA.radius();
 
     return this;
+  }
+
+  clone() {
+    return new Vehicle(this.dna).mutate();
   }
 
   breed(other) {

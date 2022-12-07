@@ -8,7 +8,7 @@ let pellets = [];
 let generationCount = 1;
 
 let pelletCount;
-const vehicleCount = 10;
+const vehicleCount = 20;
 
 const toggleVisuals = () => (Vehicle.verboseVisuals = !Vehicle.verboseVisuals);
 
@@ -33,7 +33,7 @@ function newGeneration(oldVehicles) {
 }
 
 function reset() {
-  pelletCount = ~~((width * height) / 1500);
+  pelletCount = ~~((width * height) / 3000);
 }
 
 function setup() {
@@ -48,11 +48,17 @@ function setup() {
 function draw() {
   background(20);
   pellets.forEach((p) => p.update());
-  vehicles.forEach((v) => v.update(pellets));
+  vehicles.forEach((v) => {
+    v.update(pellets);
+    if (random() < v.cloneRate && vehicles.length < vehicleCount)
+      vehicles.push(v.clone());
+  });
 
   pellets = pellets.filter((p) => !p.consumed);
-
   if (pellets.length < pelletCount) pellets.push(new Pellet());
 
-  if (vehicles.every((v) => !v.alive)) newGeneration(vehicles);
+  vehicles = vehicles.filter((v) => v.alive);
+  if (vehicles.length === 1) vehicles.push(vehicles[0].clone()); // REMOVE ME
+
+  if (vehicles.every((v) => !v.alive)) newGeneration();
 }
