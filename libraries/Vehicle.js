@@ -32,7 +32,7 @@ class Pellet {
 }
 
 class Vehicle {
-  static verboseVisuals = true;
+  static verboseVisuals = false;
 
   static random(vehicles) {
     return randomByProp(vehicles, "age");
